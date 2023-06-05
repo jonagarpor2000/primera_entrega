@@ -48,7 +48,7 @@ export class ProductManager {
     }
 
     //Añade producto mediante array que le es pasado, sin embargo, no es capaz de agregar producto uno tras otro
-    //Genera cada producto como array de objeto separados
+
     addProduct = async (title, description, code ,price,status,stock,category,thumbnail) => {
        
         let prodarr = []
@@ -56,11 +56,10 @@ export class ProductManager {
         if (await this.#existsfile){
             let contenido = await this.getProducts()
             let id_prodarr = await this.#generateId()
-            prodarr.push(contenido)
-            prodarr.push({id: id_prodarr,title, description, code ,price,status,stock,category,thumbnail})
+           prodarr = [...contenido,{id: id_prodarr,title, description, code ,price,status,stock,category,thumbnail}]
             await fs.promises.writeFile(this.#filename, JSON.stringify(prodarr, null,'\t'))
         }else{
-            console.log('Creado de cero')
+            prodarr = [{id: id_prodarr,title, description, code ,price,status,stock,category,thumbnail}]
             await fs.promises.writeFile(this.#filename, JSON.stringify(prodarr, null,'\t'))
         }
 
@@ -75,10 +74,9 @@ export class ProductManager {
 
     updateProduct = async (id,title, description, code ,price,status,stock,category,thumbnail)=>{
         let contenido = await this.getProducts()
-        console.log("Contenido:\n"+contenido)
         let map_cont = contenido.map(producto => producto.id)
-        let indx = map_cont.indexOf(id)
-        console.log("Contenido:\n"+contenido+"\nIndice: "+indx)
+        let indx = Number(map_cont.indexOf(id))
+        console.log("indx 1: "+map_cont.indexOf(1)+"\nContenido:\n"+contenido+"\nIndice: "+indx)
         if(indx===-1){
             console.log('No existe tal producto');
         }else{
