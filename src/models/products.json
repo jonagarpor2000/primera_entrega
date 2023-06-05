@@ -1,9 +1,9 @@
 [
 	{
-		"id": 1,
-		"title": "producto prueba",
+		"id": "1",
+		"title": "producto probado",
 		"description": "Este es un producto prueba",
-		"code": "abc123",
+		"code": "abc12",
 		"price": 200,
 		"status": true,
 		"stock": 25,

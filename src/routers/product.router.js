@@ -6,8 +6,8 @@ const prodmg = new ProductManager('./src/models/products.json')
 
 
 
-//endpoint para leer todos los usuarios
-// http://localhost:8080/pets/
+//endpoint para leer todos los productos
+// http://localhost:8080/api/products
 router.get('/', (req, res) => {
     const limit = req.query.limit
     prodmg.getProducts().then(prods =>{
@@ -32,7 +32,7 @@ router.get('/:pid', (req, res) => {
     
 })
 
-//endpoint para crear a un nuevo usuario
+//endpoint para crear a un nuevo producto
 router.post('/', (req, res) => {
     const { title, description, code ,price,status,stock,category,thumbnail } = req.body
 
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
     
 })
 
-//endpoint para actualizar los datos de un usuario
+//endpoint para actualizar los datos de un producto
 router.put('/:pid', (req, res) => {
     const id = req.params.pid
     const {title, description, code ,price,status,stock,category,thumbnail} = req.body
@@ -53,7 +53,7 @@ router.put('/:pid', (req, res) => {
     
 })
 
-//endpoint para eliminar un usuario
+//endpoint para eliminar un producto
 router.delete('/:pid', (req, res) => {
     const id = req.params.pid
     prodmg.deleteProduct(id).then(prod =>{

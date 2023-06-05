@@ -1,5 +1,5 @@
 import fs from 'fs';
-export class ProductManager {
+export class CartManager {
     #filename
     #format
     #error
