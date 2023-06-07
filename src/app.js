@@ -16,6 +16,6 @@ app.get('/health', (req, res) => res.json({ message: 'The server is running on p
 
 
 app.use('/api/products', productRouter)
-app.use('/carts', cartRouter)
+app.use('/api/carts', cartRouter)
 
 app.listen(8080, () => console.log('Server Up'))

@@ -1,4 +1,7 @@
 import fs from 'fs';
+import {ProductManager} from './ProductManager.js'
+
+const prodmg = new ProductManager('./src/models/products.json')
 export class CartManager {
     #filename
     #format
@@ -12,9 +15,13 @@ export class CartManager {
 
     //Obtiene productos desde JSON y los retorna en formato objeto
     getProducts = async()=> {
+        
         return JSON.parse(await fs.promises.readFile(this.#filename,this.#format))
     }
     
+    test = async() => {
+        return await prodmg.getProducts()
+    }
 
     getProductById = async(id) => {
         let contenido = await this.getProducts()
@@ -28,8 +35,8 @@ export class CartManager {
      return (products.length === 0) ? 1 : products[products.length-1].id + 1
     } 
     
-    #existsfile = async () => {
-        fs.existsSync(this.#filename)
+    #existsproduct = async (id) => {
+        return !(await this.getProductById(id)) ? true : false  
     }
 
     
@@ -49,11 +56,11 @@ export class CartManager {
 
     //Añade producto mediante array que le es pasado, sin embargo, no es capaz de agregar producto uno tras otro
 
-    addProduct = async (title, description, code ,price,status,stock,category,thumbnail) => {
+    addProduct = async (id_prod) => {
        
         let prodarr = []
         await this.#validateProduct(title, description, code ,price,status,stock,category,thumbnail)
-        if (await this.#existsfile){
+        if (await this.#existsproduct){
             let contenido = await this.getProducts()
             let id_prodarr = await this.#generateId()
            prodarr = [...contenido,{id: id_prodarr,title, description, code ,price,status,stock,category,thumbnail}]
